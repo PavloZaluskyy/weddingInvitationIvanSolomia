@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="uk" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Запрошення на весілля | Іван та Соломія</title>
+    <meta name="description" content="Весільне запрошення Івана та Соломії — 22 серпня 2026 року.">
+    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Elegant Serifs & Calligraphy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Marck+Script&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        beigeLight: '#F7F3EC',
+                        beigeDark: '#EAE1D3',
+                        goldAccent: '#D4AF37',
+                        goldHover: '#B89628',
+                        charcoal: '#1E2022',
+                        charcoalSoft: '#2B2E33',
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        cursive: ['Great Vibes', 'cursive'],
+                        script: ['Marck Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background-color: #1E2022;
+            font-family: 'Montserrat', sans-serif;
+            touch-action: pan-y;
+        }
+
+        /* Snap Scroll Layout Container */
+        .snap-container {
+            height: 100vh;
+            overflow-y: mandatory;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Pure White Hero Section Background */
+        .white-hero-bg {
+            background-color: #FFFFFF;
+            position: relative;
+        }
+
+        /* Fingerprints Merge Animation */
+        .fp-wrapper {
+            position: relative;
+            width: 300px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fp-left, .fp-right {
+            position: absolute;
+            width: 140px;
+            height: 200px;
+            object-fit: contain;
+            transition: all 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(100%) contrast(150%);
+            mix-blend-mode: multiply;
+        }
+
+        .fp-left {
+            transform: translateX(-150px) rotate(-10deg);
+            opacity: 0.85;
+        }
+
+        .fp-right {
+            transform: translateX(150px) rotate(10deg);
+            opacity: 0.85;
+        }
+
+        .fp-heart-merged {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 1.5s ease-in-out;
+            filter: grayscale(100%) contrast(150%);
+            mix-blend-mode: multiply;
+        }
+
+        /* Merged state active classes */
+        .hero-merged .fp-left {
+            transform: translateX(-12px) rotate(0deg) scale(0.95);
+            opacity: 0;
+        }
+
+        .hero-merged .fp-right {
+            transform: translateX(12px) rotate(0deg) scale(0.95);
+            opacity: 0;
+        }
+
+        .hero-merged .fp-heart-merged {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* SVG Pointer Callout Lines Animation */
+        .callout-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .callout-line {
+            stroke: #1E2022;
+            stroke-width: 1.2;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            transition: stroke-dashoffset 1.2s ease-out 1.2s;
+        }
+        .point{opacity:0;transition:opacity 0.8s ease-out 2.2s;}
+
+        .hero-merged .callout-line {
+            stroke-dashoffset: 0;
+        }
+
+        .name-label {
+            position: absolute;
+            font-family:'Great Vibes', cursive;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.15em;
+            color: #1E2022;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.8s ease-out 2s, transform 0.8s ease-out 2s;
+        }
+
+        .label-ivan {
+            top: 18%;
+            left: 13%;
+            transform: translateY(-8px);
+        }
+
+        .label-solomiya {
+            bottom: 16%;
+            right: 1%;
+            transform: translateY(8px);
+        }
+
+        .hero-merged .name-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Twinkling lights effect for restaurant terrace */
+        .garland-light {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #FFE89C;
+            box-shadow: 0 0 10px #FFD700;
+            animation: blinkLight 2.2s infinite alternate ease-in-out;
+            z-index: 20;
+        }
+
+        @keyframes blinkLight {
+            0% { opacity: 0.25; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 14px #FFE57F; }
+        }
+
+        /* Linen texture effect */
+        .linen-texture {
+            background-color: #F8F5EE;
+            background-image: radial-gradient(#D6C8B4 0.8px, transparent 0.8px), radial-gradient(#D6C8B4 0.8px, #F8F5EE 0.8px);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+        }
+
+        /* Dotted Route Connector Animation */
+        .route-path-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .animated-dash {
+            stroke-dasharray: 8, 8;
+            animation: dashMove 12s linear infinite;
+        }
+
+        @keyframes dashMove {
+            to { stroke-dashoffset: -160; }
+        }
+
+        /* Hide scrollbars */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Text Gold Glow */
+        .gold-glow {
+            text-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+        }
+
+        /* Watercolor effect for Church image */
+        .watercolor-effect {
+            filter: contrast(108%) brightness(102%) saturate(110%);
+            mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="font-sans text-charcoal select-none antialiased">
+
+    <!-- Audio Music Player Toggle Button -->
+    <!-- <div class="fixed top-5 right-5 z-50">
+        <button id="musicToggle" aria-label="Увімкнути музику" class="w-12 h-12 rounded-full bg-white/85 backdrop-blur-md border border-goldAccent/40 shadow-xl flex items-center justify-center text-goldAccent hover:scale-110 active:scale-95 transition-all duration-300">
+            <i id="musicIcon" class="fa-solid fa-music text-lg"></i>
+        </button>
+    </div> -->
+
+    <!-- Main Vertical Snap Scroll Container -->
+    <div class="snap-container no-scrollbar" id="snapContainer">
+
+        <!-- SECTION 1: HERO SCREEN -->
+        <section class="snap-section white-hero-bg py-10 px-6 text-center select-none" id="sec-1">
+            
+            <!-- Top Elegant Phrase -->
+            <div class="pt-8 z-10">
+                <span class="font-sans font-medium text-xs sm:text-sm text-stone-800 tracking-[0.25em] uppercase block">
+                    Все починається з кохання...
+                </span>
+            </div>
+
+            <!-- Central Element: Fingerprints Morph & Callout Lines Animation -->
+            <div class="my-auto relative flex items-center justify-center w-full max-w-sm" id="heroAnimationBox">
+                
+                <!-- Dynamic Callout Pointer Lines SVG -->
+                <svg class="callout-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Line pointing to Ivan (Top Left) -->
+                    <path d="M 85 75 L 125 110" class="callout-line" />
+                    <circle cx="125" cy="110" r="2.5" fill="#1E2022" class="callout-line point" />
+                    
+                    <!-- Line pointing to Solomiya (Bottom Right) -->
+                    <path d="M 235 245 L 195 210" class="callout-line" />
+                    <circle cx="195" cy="210" r="2.5" fill="#1E2022" class="callout-line point" />
+                </svg>
+
+                <!-- Floating Name Labels -->
+                <div class="name-label label-ivan">ІВАН</div>
+                <div class="name-label label-solomiya">СОЛОМІЯ</div>
+
+                <!-- Fingerprints Container -->
+                <div class="fp-wrapper">
+                    <!-- Left Fingerprint -->
+                    <img src="./images/fingerprintLeft.png" alt="Відбиток Івана" class="fp-left" onerror="this.src='./images/fingerprintLeft.png'">
+                    <!-- Right Fingerprint -->
+                    <img src="./images/fingerprintRight.png" alt="Відбиток Соломії" class="fp-right" onerror="this.src='./images/fingerprintRight.png'">
+                    <!-- Combined Heart Fingerprint -->
+                    <img src="./images/fingerprintHeart.png" alt="Серце з відбитків" class="fp-heart-merged" onerror="this.src='./images/fingerprintHeart.png'">
+                </div>
+
+            </div>
+
+            <!-- Bottom Date & Swipe Up Hint -->
+            <div class="pb-8 z-10 space-y-4">
+                <div class="font-sans font-semibold text-xs sm:text-sm text-stone-900 tracking-[0.2em] uppercase">
+                    СУБОТА, 22 СЕРПНЯ 2026
+                </div>
+                
+                <!-- Swipe Up Indicator -->
+                <div class="pt-2 flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="scrollToNext(1)">
+                    <span class="text-[9px] tracking-[0.25em] uppercase text-stone-500 font-medium">Гортайте вгору</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-stone-700 animate-bounce"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: INVITATION & COUPLE PHOTO -->
+        <section class="snap-section bg-cream p-6 text-center" id="sec-2">
+            <!-- Header Text -->
+            <div class="pt-4">
+                <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-stone-800 tracking-wide">Дорогі рідні та друзі!</h2>
+                <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
+            </div>
+
+            <!-- Couple Photo Card -->
+            <div class="w-full max-w-sm my-auto space-y-4">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[3/4] max-h-[42vh] mx-auto group">
+                    <img src="./images/IvanAndSolomia.jpg" alt="Іван та Соломія" class="w-full h-full object-cover filter contrast-[1.02] transition duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                    <!-- <div class="absolute bottom-3 left-0 right-0 text-white font-cursive text-3xl drop-shadow-md">
+                        Іван & Соломія
+                    </div> -->
+                </div>
+
+                <!-- Invitation Quote Text -->
+                <p class="font-serif text-sm sm:text-base text-stone-700 italic px-3 leading-relaxed">
+                    «Один день цього року буде для нас особливим, і ми хочемо провести його в колі близьких і друзів. Тому з великим задоволенням запрошуємо Вас на наше свято!»
+                </p>
+            </div>
+
+            <!-- Active Countdown Timer -->
+            <div class="pb-6 w-full max-w-sm">
+                <div class="text-[11px] font-medium uppercase tracking-widest text-stone-500 mb-2">До нашого свята залишилось:</div>
+                <div class="grid grid-cols-4 gap-2 text-center" id="countdownTimer">
+                    <div class="bg-beigeLight border border-beigeDark/60 rounded-xl p-2 shadow-sm">
+                        <span id="days" class="block font-serif text-2xl font-bold text-stone-800">00</span>
+                        <span class="text-[9px] text-stone-500 uppercase">Днів</span>
+                    </div>
+                    <div class="bg-beigeLight border border-beigeDark/60 rounded-xl p-2 shadow-sm">
+                        <span id="hours" class="block font-serif text-2xl font-bold text-stone-800">00</span>
+                        <span class="text-[9px] text-stone-500 uppercase">Годин</span>
+                    </div>
+                    <div class="bg-beigeLight border border-beigeDark/60 rounded-xl p-2 shadow-sm">
+                        <span id="minutes" class="block font-serif text-2xl font-bold text-stone-800">00</span>
+                        <span class="text-[9px] text-stone-500 uppercase">Хвилин</span>
+                    </div>
+                    <div class="bg-beigeLight border border-beigeDark/60 rounded-xl p-2 shadow-sm">
+                        <span id="seconds" class="block font-serif text-2xl font-bold text-stone-800">00</span>
+                        <span class="text-[9px] text-stone-500 uppercase">Секунд</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: WEDDING CEREMONY (LOCATION 1) -->
+        <section class="snap-section bg-charcoal text-white p-6 text-center" id="sec-3">
+            <!-- Top Header -->
+            <div class="pt-6">
+                <span class="text-goldAccent font-serif italic text-lg block">Таїнство любові</span>
+                <h2 class="font-serif text-3xl font-bold tracking-wide mt-1">Вінчання</h2>
+                <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
+            </div>
+
+            <!-- Stylized Church Card with Watercolor Glow Effect -->
+            <div class="w-full max-w-sm my-auto space-y-4 relative z-20">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-stone-700/80 aspect-[4/3] mx-auto bg-stone-900 group">
+                    <img src="./images/church.png" alt="Церква св. Миколая Чудотворця" 
+                         class="w-full h-full object-cover watercolor-effect transition duration-700 group-hover:scale-105">
+                    
+                    <!-- Ambient lighting overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute top-3 right-3 bg-goldAccent text-charcoal font-bold px-3 py-1 rounded-full text-xs shadow-md">
+                        <i class="fa-regular fa-clock mr-1"></i> 13:00
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <h3 class="font-serif text-xl font-bold text-cream">Церква св. Миколая Чудотворця</h3>
+                    <p class="text-xs text-stone-400">с. Дубаневичі, Львівська область</p>
+                </div>
+            </div>
+
+            <!-- Map Action Button -->
+            <div class="pb-8 w-full max-w-xs relative z-20">
+                <a href="https://maps.google.com/?q=Церква+св.+Миколая+Чудотворця+Дубаневичі" target="_blank" 
+                   class="w-full bg-goldAccent hover:bg-goldHover text-charcoal font-semibold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Прокласти маршрут</span>
+                </a>
+            </div>
+
+            <!-- SVG Dotted Line connecting Church (Sec 3) to Restaurant (Sec 4) -->
+            <svg class="route-path-svg" viewBox="0 0 400 800" preserveAspectRatio="none">
+                <path d="M 200, 520 C 350, 620 50, 720 200, 800" 
+                      fill="none" 
+                      stroke="#D4AF37" 
+                      stroke-width="3" 
+                      stroke-linecap="round" 
+                      class="animated-dash opacity-70" />
+            </svg>
+        </section>
+
+        <!-- SECTION 4: BANQUET (LOCATION 2) -->
+        <section class="snap-section bg-cream p-6 text-center relative overflow-hidden" id="sec-4">
+            <!-- SVG Dotted Line continuation landing at Restaurant -->
+            <svg class="route-path-svg absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60" viewBox="0 0 400 800" preserveAspectRatio="none">
+                <path d="M 200, 0 C 330, 60 70, 130 200, 195" 
+                      fill="none" 
+                      stroke="#D4AF37" 
+                      stroke-width="3" 
+                      stroke-linecap="round" 
+                      class="animated-dash" />
+            </svg>
+
+            <!-- Top Header -->
+            <div class="pt-6 relative z-10">
+                <span class="text-goldAccent font-serif italic text-lg block">Святковий вечір</span>
+                <h2 class="font-serif text-3xl font-bold text-stone-800 tracking-wide mt-1">Святковий бенкет</h2>
+                <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
+            </div>
+
+            <!-- Restaurant Card -->
+            <div class="w-full max-w-sm my-auto space-y-4 relative z-10">
+                <div class="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-white aspect-[4/3] mx-auto group">
+                    <img src="./images/Restaurant.png" alt="Ресторан Скорпіон" class="w-full h-full object-cover transition duration-700 group-hover:scale-105 relative">
+
+                    <div class="absolute bottom-3 right-3 bg-stone-900/90 text-goldAccent font-bold px-3 py-1 rounded-full text-xs shadow-md border border-goldAccent/30">
+                        <i class="fa-regular fa-clock mr-1"></i> 14:00
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <h3 class="font-serif text-xl font-bold text-stone-800">Ресторан "Скорпіон"</h3>
+                    <p class="text-xs text-stone-600">м. Рудки, вул. В. Івасюка, 17</p>
+                </div>
+            </div>
+
+            <!-- Map Action Button -->
+            <div class="pb-8 w-full max-w-xs relative z-10 mx-auto">
+                <a href="https://maps.google.com/?q=Ресторан+Скорпіон+Рудки+Івасюка+17" target="_blank" 
+                   class="w-full bg-stone-800 hover:bg-stone-900 text-cream font-semibold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm border border-goldAccent/40">
+                    <i class="fa-solid fa-location-arrow text-goldAccent"></i>
+                    <span>Маршрут до ресторану</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECTION 5: RSVP FORM -->
+        <section class="snap-section bg-cream p-6 text-center relative flex flex-col justify-center items-center" id="sec-5">
+            
+            <!-- Header -->
+            <div class="mb-6 max-w-md mx-auto">
+                <span class="text-goldAccent font-serif italic text-lg block"> Підтвердження</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-800 tracking-wide mt-1 uppercase">Будемо раді розділити цей день з Вами!</h2>
+                <div class="w-10 h-0.5 bg-goldAccent/60 mx-auto mt-3"></div>
+            </div>
+
+            <!-- Adult-only note & Google Form Link Card -->
+            <div class="w-full max-w-md mx-auto bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-stone-200/70 shadow-sm space-y-6 text-center">
+                
+                <!-- Notice Text -->
+                <div class="space-y-3 text-stone-700 text-xs sm:text-sm leading-relaxed font-light">
+                    <p class="italic">
+                        "Щоб кожен зміг повністю насолодитися святом, музикою та вечором відпочинку, ми вирішили зробити наше весілля святом для дорослих!
+                    </p>
+                    <p class="font-medium text-stone-800">
+                        Тому з любов’ю просимо залишити малечу вдома."
+                    </p>
+                </div>
+
+                <div class="w-12 h-[1px] bg-stone-300 mx-auto"></div>
+
+                <p class="text-xs text-stone-500 tracking-wide">
+                    Будь ласка, заповніть коротку анкету до: <span class="font-semibold text-stone-700">15 серпня 2026</span>
+                </p>
+
+                <!-- Google Form CTA Button -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdXU03fecmdvVrOXrYuu5rhVH8pgf9xHwv6NK-yYVwwzamWhA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center gap-2.5 w-full bg-stone-900 hover:bg-stone-800 text-cream font-medium py-3.5 px-6 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-xs uppercase tracking-widest border border-goldAccent/40">
+                    <i class="fa-regular fa-pen-to-square text-goldAccent text-sm"></i>
+                    <span>Заповнити Google Форму</span>
+                </a>
+            </div>
+
+            <p class="text-xs text-stone-400 italic mt-6">Чекаємо на вашу відповідь з нетерпінням!</p>
+        </section>
+
+        <!-- SECTION 6: THANK YOU & COORDINATOR -->
+        <section class="snap-section bg-charcoal text-cream p-6 text-center" id="sec-6">
+            <!-- Top Heart Icon -->
+            <div class="pt-8 text-goldAccent text-2xl animate-pulse">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <!-- Main Thank You Message -->
+            <div class="my-auto space-y-4 max-w-sm">
+                <span class="font-cursive text-5xl text-goldAccent block gold-glow">До зустрічі!</span>
+                <h2 class="font-serif text-3xl font-bold">Іван та Соломія</h2>
+                <p class="font-serif text-base text-stone-300 italic px-4 leading-relaxed">
+                    «Дякуємо, що розділите з нами цю радість та зробите наш день ще світлішим!»
+                </p>
+                
+                <div class="w-16 h-0.5 bg-goldAccent/60 mx-auto pt-2"></div>
+            </div>
+
+           
+
+                <div class="text-[10px] text-stone-500 font-mono">
+                    © 2026 Усі права захищені. • Make with ❤️ by <a href="https://t.me/platosoft" target="_blank" class="text-goldAccent hover:underline">PlatoSoft</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- 2. Fingerprint Morph & Line Callout Animation ---
+        const heroBox = document.getElementById('heroAnimationBox');
+
+        function triggerHeroAnimation() {
+            setTimeout(() => {
+                if (heroBox) {
+                    heroBox.classList.add('hero-merged');
+                }
+            }, 600);
+        }
+
+        // Trigger on initial page load
+        window.addEventListener('load', triggerHeroAnimation);
+        // Fallback execution
+        setTimeout(triggerHeroAnimation, 800);
+
+        // --- 3. Active Countdown Timer (Aug 22, 2026 13:00) ---
+        const targetDate = new Date('2026-08-22T13:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 4. Helper Smooth Scroll Function ---
+        function scrollToNext(index) {
+            const nextSec = document.getElementById(`sec-${index + 1}`);
+            if (nextSec) {
+                nextSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
