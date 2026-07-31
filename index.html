@@ -250,6 +250,39 @@
             mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
             -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
         }
+        /* Watercolor effect for Church image */
+        .watercolor-effect {
+            filter: contrast(108%) brightness(102%) saturate(110%);
+            mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+        }
+
+        /* Smooth Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-zoom {
+            opacity: 0;
+            transform: scale(0.92) translateY(16px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active, 
+        .reveal-zoom.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Stagger Delays */
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.35s; }
+        .delay-3 { transition-delay: 0.55s; }
+        .delay-4 { transition-delay: 0.75s; }
     </style>
 </head>
 <body class="font-sans text-charcoal select-none antialiased">
@@ -268,14 +301,14 @@
         <section class="snap-section white-hero-bg py-10 px-6 text-center select-none" id="sec-1">
             
             <!-- Top Elegant Phrase -->
-            <div class="pt-8 z-10">
+            <div class="pt-8 z-10 reveal">
                 <span class="font-sans font-medium text-xs sm:text-sm text-stone-800 tracking-[0.25em] uppercase block">
                     Все починається з кохання...
                 </span>
             </div>
 
             <!-- Central Element: Fingerprints Morph & Callout Lines Animation -->
-            <div class="my-auto relative flex items-center justify-center w-full max-w-sm" id="heroAnimationBox">
+            <div class="my-auto relative flex items-center justify-center w-full max-w-sm reveal-zoom delay-1" id="heroAnimationBox">
                 
                 <!-- Dynamic Callout Pointer Lines SVG -->
                 <svg class="callout-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -305,7 +338,7 @@
             </div>
 
             <!-- Bottom Date & Swipe Up Hint -->
-            <div class="pb-8 z-10 space-y-4">
+            <div class="pb-8 z-10 space-y-4 reveal delay-2">
                 <div class="font-sans font-semibold text-xs sm:text-sm text-stone-900 tracking-[0.2em] uppercase">
                     СУБОТА, 22 СЕРПНЯ 2026
                 </div>
@@ -321,14 +354,14 @@
         <!-- SECTION 2: INVITATION & COUPLE PHOTO -->
         <section class="snap-section bg-cream p-6 text-center" id="sec-2">
             <!-- Header Text -->
-            <div class="pt-4">
+            <div class="pt-4 reveal">
                 <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-stone-800 tracking-wide">Дорогі рідні та друзі!</h2>
                 <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
             </div>
 
             <!-- Couple Photo Card -->
             <div class="w-full max-w-sm my-auto space-y-4">
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[3/4] max-h-[42vh] mx-auto group">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[3/4] max-h-[42vh] mx-auto group reveal-zoom delay-1">
                     <img src="./images/IvanAndSolomia.jpg" alt="Іван та Соломія" class="w-full h-full object-cover filter contrast-[1.02] transition duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                     <!-- <div class="absolute bottom-3 left-0 right-0 text-white font-cursive text-3xl drop-shadow-md">
@@ -337,13 +370,13 @@
                 </div>
 
                 <!-- Invitation Quote Text -->
-                <p class="font-serif text-sm sm:text-base text-stone-700 italic px-3 leading-relaxed">
+                <p class="font-serif text-sm sm:text-base text-stone-700 italic px-3 leading-relaxed reveal delay-2">
                     «Один день цього року буде для нас особливим, і ми хочемо провести його в колі близьких і друзів. Тому з великим задоволенням запрошуємо Вас на наше свято!»
                 </p>
             </div>
 
             <!-- Active Countdown Timer -->
-            <div class="pb-6 w-full max-w-sm">
+            <div class="pb-6 w-full max-w-sm reveal delay-3">
                 <div class="text-[11px] font-medium uppercase tracking-widest text-stone-500 mb-2">До нашого свята залишилось:</div>
                 <div class="grid grid-cols-4 gap-2 text-center" id="countdownTimer">
                     <div class="bg-beigeLight border border-beigeDark/60 rounded-xl p-2 shadow-sm">
@@ -369,14 +402,14 @@
         <!-- SECTION 3: WEDDING CEREMONY (LOCATION 1) -->
         <section class="snap-section bg-charcoal text-white p-6 text-center" id="sec-3">
             <!-- Top Header -->
-            <div class="pt-6">
+            <div class="pt-6 reveal">
                 <span class="text-goldAccent font-serif italic text-lg block">Таїнство любові</span>
                 <h2 class="font-serif text-3xl font-bold tracking-wide mt-1">Вінчання</h2>
                 <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
             </div>
 
             <!-- Stylized Church Card with Watercolor Glow Effect -->
-            <div class="w-full max-w-sm my-auto space-y-4 relative z-20">
+            <div class="w-full max-w-sm my-auto space-y-4 relative z-20 reveal-zoom delay-1">
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-stone-700/80 aspect-[4/3] mx-auto bg-stone-900 group">
                     <img src="./images/church.png" alt="Церква св. Миколая Чудотворця" 
                          class="w-full h-full object-cover watercolor-effect transition duration-700 group-hover:scale-105">
@@ -388,14 +421,14 @@
                     </div>
                 </div>
 
-                <div class="space-y-1">
+                <div class="space-y-1 reveal delay-2">
                     <h3 class="font-serif text-xl font-bold text-cream">Церква св. Миколая Чудотворця</h3>
                     <p class="text-xs text-stone-400">с. Дубаневичі, Львівська область</p>
                 </div>
             </div>
 
             <!-- Map Action Button -->
-            <div class="pb-8 w-full max-w-xs relative z-20">
+            <div class="pb-8 w-full max-w-xs relative z-20 reveal delay-3">
                 <a href="https://maps.google.com/?q=Церква+св.+Миколая+Чудотворця+Дубаневичі" target="_blank" 
                    class="w-full bg-goldAccent hover:bg-goldHover text-charcoal font-semibold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
                     <i class="fa-solid fa-map-location-dot"></i>
@@ -404,37 +437,37 @@
             </div>
 
             <!-- SVG Dotted Line connecting Church (Sec 3) to Restaurant (Sec 4) -->
-            <svg class="route-path-svg" viewBox="0 0 400 800" preserveAspectRatio="none">
+            <svg class="route-path-svg reveal delay-4" viewBox="0 0 400 800" preserveAspectRatio="none">
                 <path d="M 200, 520 C 350, 620 50, 720 200, 800" 
                       fill="none" 
                       stroke="#D4AF37" 
                       stroke-width="3" 
                       stroke-linecap="round" 
-                      class="animated-dash opacity-70" />
+                      class="animated-dash opacity-70 reveal delay-4" />
             </svg>
         </section>
 
         <!-- SECTION 4: BANQUET (LOCATION 2) -->
         <section class="snap-section bg-cream p-6 text-center relative overflow-hidden" id="sec-4">
             <!-- SVG Dotted Line continuation landing at Restaurant -->
-            <svg class="route-path-svg absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60" viewBox="0 0 400 800" preserveAspectRatio="none">
+            <svg class="route-path-svg absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60 reveal delay-4" viewBox="0 0 400 800" preserveAspectRatio="none">
                 <path d="M 200, 0 C 330, 60 70, 130 200, 195" 
                       fill="none" 
                       stroke="#D4AF37" 
                       stroke-width="3" 
                       stroke-linecap="round" 
-                      class="animated-dash" />
+                      class="animated-dash reveal delay-4" />
             </svg>
 
             <!-- Top Header -->
-            <div class="pt-6 relative z-10">
+            <div class="pt-6 relative z-10 reveal">
                 <span class="text-goldAccent font-serif italic text-lg block">Святковий вечір</span>
                 <h2 class="font-serif text-3xl font-bold text-stone-800 tracking-wide mt-1">Святковий бенкет</h2>
                 <div class="w-12 h-0.5 bg-goldAccent mx-auto mt-2"></div>
             </div>
 
             <!-- Restaurant Card -->
-            <div class="w-full max-w-sm my-auto space-y-4 relative z-10">
+            <div class="w-full max-w-sm my-auto space-y-4 relative z-10 reveal-zoom delay-1">
                 <div class="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-white aspect-[4/3] mx-auto group">
                     <img src="./images/Restaurant.png" alt="Ресторан Скорпіон" class="w-full h-full object-cover transition duration-700 group-hover:scale-105 relative">
 
@@ -443,14 +476,14 @@
                     </div>
                 </div>
 
-                <div class="space-y-1">
+                <div class="space-y-1 reveal delay-2">
                     <h3 class="font-serif text-xl font-bold text-stone-800">Ресторан "Скорпіон"</h3>
                     <p class="text-xs text-stone-600">м. Рудки, вул. В. Івасюка, 17</p>
                 </div>
             </div>
 
             <!-- Map Action Button -->
-            <div class="pb-8 w-full max-w-xs relative z-10 mx-auto">
+            <div class="pb-8 w-full max-w-xs relative z-10 mx-auto reveal delay-3">
                 <a href="https://maps.google.com/?q=Ресторан+Скорпіон+Рудки+Івасюка+17" target="_blank" 
                    class="w-full bg-stone-800 hover:bg-stone-900 text-cream font-semibold py-3.5 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm border border-goldAccent/40">
                     <i class="fa-solid fa-location-arrow text-goldAccent"></i>
@@ -463,14 +496,14 @@
         <section class="snap-section bg-cream p-6 text-center relative flex flex-col justify-center items-center" id="sec-5">
             
             <!-- Header -->
-            <div class="mb-6 max-w-md mx-auto">
-                <span class="text-goldAccent font-serif italic text-lg block"> Підтвердження</span>
+            <div class="mb-6 max-w-md mx-auto reveal">
+                <span class="text-goldAccent font-serif italic text-lg block">Підтвердження</span>
                 <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-800 tracking-wide mt-1 uppercase">Будемо раді розділити цей день з Вами!</h2>
                 <div class="w-10 h-0.5 bg-goldAccent/60 mx-auto mt-3"></div>
             </div>
 
             <!-- Adult-only note & Google Form Link Card -->
-            <div class="w-full max-w-md mx-auto bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-stone-200/70 shadow-sm space-y-6 text-center">
+            <div class="w-full max-w-md mx-auto bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-stone-200/70 shadow-sm space-y-6 text-center reveal-zoom delay-1">
                 
                 <!-- Notice Text -->
                 <div class="space-y-3 text-stone-700 text-xs sm:text-sm leading-relaxed font-light">
@@ -496,18 +529,18 @@
                 </a>
             </div>
 
-            <p class="text-xs text-stone-400 italic mt-6">Чекаємо на вашу відповідь з нетерпінням!</p>
+            <p class="text-xs text-stone-400 italic mt-6 reveal delay-2">Чекаємо на вашу відповідь з нетерпінням!</p>
         </section>
 
         <!-- SECTION 6: THANK YOU & COORDINATOR -->
         <section class="snap-section bg-charcoal text-cream p-6 text-center" id="sec-6">
             <!-- Top Heart Icon -->
-            <div class="pt-8 text-goldAccent text-2xl animate-pulse">
+            <div class="pt-8 text-goldAccent text-2xl animate-pulse reveal">
                 <i class="fa-solid fa-heart"></i>
             </div>
 
             <!-- Main Thank You Message -->
-            <div class="my-auto space-y-4 max-w-sm">
+            <div class="my-auto space-y-4 max-w-sm reveal-zoom delay-1">
                 <span class="font-cursive text-5xl text-goldAccent block gold-glow">До зустрічі!</span>
                 <h2 class="font-serif text-3xl font-bold">Іван та Соломія</h2>
                 <p class="font-serif text-base text-stone-300 italic px-4 leading-relaxed">
@@ -517,17 +550,33 @@
                 <div class="w-16 h-0.5 bg-goldAccent/60 mx-auto pt-2"></div>
             </div>
 
-           
-
+            <div class="pb-6 reveal delay-2">
                 <div class="text-[10px] text-stone-500 font-mono">
-                    © 2026 Усі права захищені. • Make with ❤️ by <a href="https://t.me/platosoft" target="_blank" class="text-goldAccent hover:underline">PlatoSoft</a>
+                    © 2026 Усі права захищені. • Made with ❤️ by <a href="https://t.me/platosoft" target="_blank" class="text-goldAccent hover:underline">PlatoSoft</a>
                 </div>
             </div>
         </section>
-
     </div>
 
     <script>
+         // --- 1. Intersection Observer for Smooth Scroll Reveal ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: document.getElementById('snapContainer'),
+                threshold: 0.15
+            };
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal, .reveal-zoom');
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
         // --- 2. Fingerprint Morph & Line Callout Animation ---
         const heroBox = document.getElementById('heroAnimationBox');
 
